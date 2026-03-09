@@ -6,6 +6,88 @@ A comprehensive, evidence-based framework for analyzing emerging commercial, tec
 
 ---
 
+## Mead Framework Screener — Web Application
+
+This repository also contains a Next.js 14 web application implementing the **Mead Framework** — a structured value-investing scoring system for evaluating public companies across six analytical modules.
+
+### Prerequisites
+
+- Node.js 18 or later
+- npm 9 or later
+
+### Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your API keys
+
+# Start development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Environment Variables
+
+Create `.env.local` in the project root:
+
+```
+FMP_API_KEY=your_financial_modeling_prep_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+```
+
+**Getting an FMP API key:**
+1. Visit [financialmodelingprep.com](https://financialmodelingprep.com/developer/docs/)
+2. Create a free account
+3. The free tier supports income statement, balance sheet, cash flow, and quote endpoints used by this app
+4. Copy your API key from the dashboard
+
+**Getting an Anthropic API key:**
+1. Visit [console.anthropic.com](https://console.anthropic.com/)
+2. Create an account and generate an API key
+3. The app uses `claude-sonnet-4-20250514` — AI analysis is optional (the app renders all calculations without it)
+
+### Pages
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Dashboard | `/` | List of saved analyses; enter a ticker to start |
+| Analysis | `/analyze/[ticker]` | Full 6-module Mead analysis with score sidebar and charts |
+| Edit | `/analyze/[ticker]/edit` | Override FMP data and enter manual fields (5yr history, qualitative flags) |
+
+### Mead Framework Modules
+
+1. **Capital Employed & ROCE** — capital employed build-up table and ROCE decomposition (goodwill drag)
+2. **Owner Earnings** — consolidated vs. attributable OE, maintenance capex, asset intensity
+3. **Moat Assessment** — moat type count, durability, cyclicality flag
+4. **Management & Capital Allocation** — $1 test, share count trend, capital allocation framework
+5. **Balance Sheet Health** — leverage ratios (current + trough), book value, accounting quality
+6. **Valuation Bridge** — going-in yield, implied price scenarios, margin of safety
+
+### Scoring (100 points)
+
+| Module | Max Points |
+|--------|-----------|
+| ROCE Quality | 30 |
+| Cyclicality Discount | up to –8 |
+| Goodwill Drag | 10 |
+| Owner Earnings Quality | 10 |
+| $1 Test | 15 |
+| Share Count Trend | 10 |
+| Debt Discipline | 10 |
+| Moat | 10 |
+| Management & Accounting | 5 |
+
+Verdicts: **Strong Candidate** (≥75%) · **Watchlist** (≥55%) · **Weak** (≥38%) · **Pass** (<38%)
+
+---
+
+---
+
 ## 🎯 What This Framework Does
 
 This framework helps you:
